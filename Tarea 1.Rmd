@@ -1,0 +1,91 @@
+---
+title: "Tarea 1"
+author: "Carolina  Rodriguez"
+date: "April 13, 2018"
+output: pdf_document
+fig_caption: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, tidy.opts = list(width.cutoff = 50), tidy = TRUE, fig.pos = 'h', out.extra = '')
+
+```
+
+
+```{r, warning=FALSE,message=FALSE}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+
+```
+
+
+## Ejercicio 1
+
+
+
+
+```{r,echo =FALSE}
+cap1 <- "Gráfico de dispersión de Esperanza de vida por años según paises coloreados de acuerdo al continente. Claramente podemos observar la diferencia entre los distintos continentes, donde Africa tiene una menor esperanza de vida observandose una gran evalución al igual que Asia, en cuanto a Europa y Oceania, son los que mayor espeanza de vida tienen, pero su evolución es mas lenta "
+```
+
+```{r, echo = TRUE, fig.width=5, fig.height=5, fig.cap=cap1,warning=FALSE, message=FALSE}
+ggplot(gapminder,aes(x=lifeExp,y=year,color=continent))+geom_point()+geom_smooth(se=FALSE)+labs(y="Año",x="Esperanza de vida", title="Esperanza de vida por años, coloreado por continente")
+```
+
+
+##Ejercicio 2
+Omitir la capa de geom_point del gráfico anterior. Las lineas aún aparecen aunque los puntos no. ¿Porqué
+sucede esto?
+
+```{r, echo = TRUE, fig.width=5, fig.height=5, fig.cap=cap1,warning=FALSE, message=FALSE}
+ggplot(gapminder,aes(x=lifeExp,y=year,color=continent))+geom_smooth(se=FALSE)+labs(y="Año",x="Esperanza de vida", title="Esperanza de vida por años, coloreado por continente")
+```
+
+Es por la forma en la cual ggplot construye los gráficos, contruye una capa encima de otra de forma independiente, geom_smooth utiliza los datos para realizar la regresión y no los puntos dibujados por geom_point.
+
+
+## Ejercicio 3
+
+
+
+Al observar el gráfico es claro que existen observaciones atípicas que podrían ser errores de typeo, lo ideal sería sacar esas observaciones. Si no pudieramos modificar los datos, al tener tantos datos y con valores tan distintos, lo mejor es usar un facet por continentes, con lo cual podremos observar las caracteristicas de cada uno y las diferencias entre ellos.
+
+```{r}
+ggplot(gapminder,aes(gdpPercap,lifeExp, color=continent))+geom_point()+facet_wrap(~continent)+labs(x="PBI per capita en U$S", y="Esperanza de Vida")
+```
+
+Para cada pais tenemos datos para distintos años, por lo cual a la hora de realizar el gráfico estamos tomando un pais como varias observaciones de acuerdo al año. Para todos los continentes menos Africa, se observa una correlación positiva entre el PBI per capita y la esperanza de vida. Para el caso de Africa, aún a iguales niveles de PBI per capita se observa que la esperanza de vida es más baja que los otros continentes, aqui deberiamos tomar en cuenta el año de la observación, lo ideal sería hacer un análisis a un año determinado.
+Con este plot podemos verificar que para el caso de Asia se presentan varias observaciones atipicas.
+
+
+##Ejercicio 4
+
+```{r,echo =FALSE}
+cap2 <- "Evolución del PBI per capita de cada pais separado por continente "
+```
+
+
+```{r echo = TRUE, fig.cap=cap2,warning=FALSE, message=FALSE}
+ggplot(gapminder,aes(year,gdpPercap,color=country))+geom_line()+facet_wrap(~continent)+
+  labs(x="Año", y="PBI per capita en U$S")
+```
+
+
+##Ejercicio 5
+
+
+```{r,echo =FALSE}
+cap3 <- "En este gráfico podemos observar la evolución de la población para el caso particular de los paises de Asia. China e India son los dos paises de Asia que mas población han tenido a lo largo de los años que se analizan con tasas de crecimiento más altas y parecidas. "
+```
+
+
+```{r echo = TRUE, fig.cap=cap3,warning=FALSE, message=FALSE}
+ggplot(filter(gapminder,continent=="Asia"),aes(year,pop,color=country))+
+geom_point()+labs(x="Año", y="Cantidad de habitantes",title =
+    "Evolucion de la cantidad de habitantes de paises de Asia")
+```
+
+
+
+
