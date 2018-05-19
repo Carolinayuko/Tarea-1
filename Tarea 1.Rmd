@@ -33,6 +33,11 @@ cap1 <- "Gráfico de dispersión de Esperanza de vida por años según paises co
 ggplot(gapminder,aes(x=lifeExp,y=year,color=continent))+geom_point()+geom_smooth(se=FALSE)+labs(y="Año",x="Esperanza de vida", title="Esperanza de vida por años, coloreado por continente")
 ```
 
+\fbox{\begin{minipage}{48em}
+Los ejes x e y deben ser al revés  pero posiblemente no viste la versión corregida de la tarea donde estaba arreglado esto.
+\end{minipage}}
+
+
 
 ##Ejercicio 2
 Omitir la capa de geom_point del gráfico anterior. Las lineas aún aparecen aunque los puntos no. ¿Porqué
@@ -44,10 +49,11 @@ ggplot(gapminder,aes(x=lifeExp,y=year,color=continent))+geom_smooth(se=FALSE)+la
 
 Es por la forma en la cual ggplot construye los gráficos, contruye una capa encima de otra de forma independiente, geom_smooth utiliza los datos para realizar la regresión y no los puntos dibujados por geom_point.
 
+\fbox{\begin{minipage}{48em}
+Bien, podés mirar la solución.
+\end{minipage}}
 
 ## Ejercicio 3
-
-
 
 Al observar el gráfico es claro que existen observaciones atípicas que podrían ser errores de typeo, lo ideal sería sacar esas observaciones. Si no pudieramos modificar los datos, al tener tantos datos y con valores tan distintos, lo mejor es usar un facet por continentes, con lo cual podremos observar las caracteristicas de cada uno y las diferencias entre ellos.
 
@@ -58,6 +64,10 @@ ggplot(gapminder,aes(gdpPercap,lifeExp, color=continent))+geom_point()+facet_wra
 Para cada pais tenemos datos para distintos años, por lo cual a la hora de realizar el gráfico estamos tomando un pais como varias observaciones de acuerdo al año. Para todos los continentes menos Africa, se observa una correlación positiva entre el PBI per capita y la esperanza de vida. Para el caso de Africa, aún a iguales niveles de PBI per capita se observa que la esperanza de vida es más baja que los otros continentes, aqui deberiamos tomar en cuenta el año de la observación, lo ideal sería hacer un análisis a un año determinado.
 Con este plot podemos verificar que para el caso de Asia se presentan varias observaciones atipicas.
 
+\fbox{\begin{minipage}{48em}
+Si este comentario sobre los años es muy pertinente para la exploración!
+Faltó incluir un tiítulo para el gráfico, a su vez podes cambiar la etiqueta de la leyenda con labs(colour="Continente"). Los colores en este plot no aportan más de lo que aporta el facet en cuanto diferenciar los continentes pero de todas formas no es incorrecto.
+\end{minipage}}
 
 ##Ejercicio 4
 
@@ -71,6 +81,12 @@ ggplot(gapminder,aes(year,gdpPercap,color=country))+geom_line()+facet_wrap(~cont
   labs(x="Año", y="PBI per capita en U$S")
 ```
 
+\fbox{\begin{minipage}{48em}
+Esta visualización es incorrecta.
+En este caso queremos una linea para cada país hay que agrupar por país como sigue 
+ggplot(data = gapminder, aes(x = year, y = gdpPercap, group = country)) +
+    geom\_line(alpha = 0.2) + facet\_wrap(~continent) + labs(x = "Año", y = "PBI per cápita en dólares ajustado por inflación", colour = "Continentes")
+\end{minipage}}
 
 ##Ejercicio 5
 
@@ -86,6 +102,12 @@ geom_point()+labs(x="Año", y="Cantidad de habitantes",title =
     "Evolucion de la cantidad de habitantes de paises de Asia")
 ```
 
+\fbox{\begin{minipage}{48em}
+Hay muchos países y es difícil de identificar los colores,  las etiquetas tal vez sería mejor cambiarlas de posición y agregar un `geom\_line()` aporta claridad
+\end{minipage}}
 
 
+\fbox{\begin{minipage}{48em}
+PUNTOS:85/100
+\end{minipage}}
 
